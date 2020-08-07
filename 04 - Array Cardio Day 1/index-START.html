@@ -63,9 +63,21 @@
     people.sort((a,b) => {
 
     })
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const vehicle_hash = data.reduce((accumulator, mode) => {
+      if (accumulator[mode]) {
+        accumulator[mode]++;
+      } else {
+        accumulator[mode] = 1;
+      }
+      return accumulator
+    }, {})
+
+    console.log(vehicle_hash);
 
   </script>
 </body>
