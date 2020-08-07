@@ -58,6 +58,9 @@
       return accumulator
     }, [])
 
+    // Way Nicer
+    streets.filter((street) => street.textContent.includes('de')).map((street) => street.innerText)
+
     // 7. sort Exercise
     // Sort the people alphabetically by first name?
     sorted_firsts = people.sort((a,b) => {
