@@ -60,9 +60,19 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by first name?
-    people.sort((a,b) => {
+    sorted_firsts = people.sort((a,b) => {
+      a_first = a.split(',')[1]
+      b_first = b.split(',')[1]
+      if (a_first < b_first) {
+        return -1
+      } else if (a_first === b_first) {
+        return 0
+      } else {
+        return 1
+      }
+    });
 
-    })
+    console.log(sorted_firsts)
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
