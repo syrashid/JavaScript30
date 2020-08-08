@@ -64,9 +64,9 @@
     }
 
     .panel > *:first-child { transform: translateY(-400%) }
-    .panel.open > *:first-child { transform: translateY(0)}
+    .panel.open-active > *:first-child { transform: translateY(0)}
     .panel > *:last-child { transform: translateY(400%) }
-    .panel.open > *:last-child { transform: translateY(0)}
+    .panel.open-active > *:last-child { transform: translateY(0)}
 
     .panel p {
       text-transform: uppercase;
@@ -117,11 +117,18 @@
 
   <script>
     const panels = document.querySelectorAll('.panel');
-    function toggleOpen () {
+    function toggleOpen() {
       panels.forEach(panel => panel.classList.remove('open'))
       this.classList.toggle('open')
     }
+
+    function toggleActive(e) {
+      if (e.propertyName.includes('flex')) {
+        this.classList.toggle('open-active')
+      }
+    }
     panels.forEach(panel => panel.addEventListener('click', toggleOpen))
+    panels.forEach(panel => panel.addEventListener('transitionend', toggleActive))
   </script>
 
 
