@@ -14,29 +14,45 @@
       <li>or a state</li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  <script>
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
-let cities;
+    let cities;
 
-(async () => {
-  const cityPromise = await fetch(endpoint);
-  cities = await cityPromise.json();
-})();
+    (async () => {
+      const cityPromise = await fetch(endpoint);
+      cities = await cityPromise.json();
+    })();
 
-const findMatches = (wordToMatch, cities) => {
-  return cities.filter(place => {
-    const regex = new RegExp(wordToMatch, 'gi');
-    return place.city.match(regex) || place.state.match(regex);
-  })
-}
+    const findMatches = (wordToMatch, cities) => {
+      return cities.filter(place => {
+        const regex = new RegExp(wordToMatch, 'gi');
+        return place.city.match(regex) || place.state.match(regex);
+      })
+    }
 
-const searchBar = document.querySelector('.search');
-const suggestions = document.querySelector('.suggestions');
+    const formatNum = (num) => {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
 
-searchBar.addEventListener('keydown', (e) => {
+    const searchBar = document.querySelector('.search');
+    const suggestions = document.querySelector('.suggestions');
 
-})
-</script>
+    searchBar.addEventListener('keyup', () => {
+      const matchArray = findMatches(searchBar.value, cities);
+      suggestions.innerHTML = '';
+      const regex = new RegExp(searchBar.value, 'gi')
+      matchArray.forEach((match) => {
+        cityNameHl = match.city.replace(regex, `<span class="hl">${searchBar.value}</span>`)
+        cityStateHl = match.state.replace(regex, `<span class="hl">${searchBar.value}</span>`)
+        suggestions.insertAdjacentHTML('beforeend',
+        `<li>
+          <span class="name">${cityNameHl}, ${cityStateHl}</span>
+          <span class="population">${formatNum(match.population)}</span>
+        </li>`
+        )
+      })
+    })
+  </script>
 </body>
 </html>
