@@ -96,6 +96,25 @@
   </div>
 
 <script>
+  const checkboxes = document.querySelectorAll('input');
+  let lastChecked;
+  checkboxes.forEach((checkbox, index) => {
+    checkbox.addEventListener('click', function(e) {
+      if(this.checked && e.shiftKey && lastChecked >= 0) {
+        sortedPair = [lastChecked, index].sort()
+        markInBetween(sortedPair);
+      }
+      lastChecked = index;
+    });
+  })
+
+  const markInBetween = (sortedPair) => {
+    checkboxes.forEach((checkbox, index) => {
+      [start, finish] = sortedPair
+      if (index >= start && index <= finish) checkbox.checked = true;
+    })
+  }
+
 </script>
 </body>
 </html>
