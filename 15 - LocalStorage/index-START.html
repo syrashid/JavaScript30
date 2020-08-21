@@ -28,8 +28,52 @@
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  let items = [];
+  // Parse data at beginning if it exists
+  const savedItems = JSON.parse(localStorage.getItem('items'));
+  if (savedItems) {
+    items = savedItems;
+    populateList(items, itemsList);
+  }
 
+  const addItem = (event) => {
+    event.preventDefault();
+    const text = document.querySelector('[name=item]').value;
+    const item = {
+      text,
+      done: false
+    }
+    items.push(item);
+    saveData(items);
+    event.target.reset();
+    populateList(items, itemsList);
+  }
+
+  function populateList(plates = [], platesList) {
+    platesList.innerHTML = plates.map((plate, index) => {
+      return `
+        <li>
+          <input type="checkbox" data-index=${index} id="item${index}" ${plate.done ? 'checked' : ''} />
+          <label for="item${index}"> ${plate.text}</label>
+        </li>`
+    }).join('');
+  }
+
+  const saveData = (items) => {
+    localStorage.setItem('items', JSON.stringify(items));
+  }
+
+  function recordMark (event) {
+    if (event.target.matches('input')) {
+      console.log(event.target.dataset.index)
+      const plate = items[parseInt(event.target.dataset.index)]
+      plate.done = true;
+      saveData(items);
+    }
+  }
+
+  addItems.addEventListener('submit', addItem)
+  itemsList.addEventListener('click', recordMark)
 </script>
 
 
