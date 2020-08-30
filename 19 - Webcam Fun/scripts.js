@@ -7,7 +7,6 @@ const snap = document.querySelector('.snap');
 async function getVideo() {
   try {
     const localMediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-    console.log(localMediaStream);
     video.srcObject = localMediaStream;
     video.play();
   } catch (err) {
