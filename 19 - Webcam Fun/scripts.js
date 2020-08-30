@@ -21,9 +21,10 @@ function paintToCanvas() {
   canvas.height = height;
   return setInterval(() => {
     ctx.drawImage(video, 0, 0, width, height);
-    let pixels = ctx.getImageData(0,0, width, height);
-    pixels = redEffect(pixels);
-    ctx.putImageData(pixels, 0, 0);
+    ctx.globalAlpha = 0.1;
+    // let pixels = ctx.getImageData(0,0, width, height);
+    // pixels = redEffect(pixels);
+    // ctx.putImageData(pixels, 0, 0);
   }, 16)
 }
 
